@@ -30,7 +30,7 @@ export const Footer: React.FC<Props> = ({
                     className='clear-completed'
                     onClick={onClearCompleted}
                     >
-                        Deleted completed</button>
+                        Delete completed</button>
                 )
             }
         </footer>
