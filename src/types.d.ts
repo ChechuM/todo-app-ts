@@ -1,3 +1,4 @@
+import { type TODO_FILTERS } from './const'
 export interface Todo {
   id: string
   title: string
@@ -12,3 +13,5 @@ export type TodoCompleted = Pick<Todo, 'completed'>
 // el contrario de Pick es el Omit
 
 export type ListOfToDos = Todo[]
+
+export type FilterValue = typeof TODO_FILTERS[keyof typeof TODO_FILTERS]

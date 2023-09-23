@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Todos } from './components/Todos'
-import { type TodoId, type Todo as TodoType } from './types'
+import { type FilterValue, type TodoId, type Todo as TodoType } from './types'
+import { TODO_FILTERS } from './const'
+import { Footer } from './components/Footer'
 
 const mockToDos = [
   {
@@ -22,6 +24,8 @@ const mockToDos = [
 
 const App = (): JSX.Element => {
   const [todos, setTodos] = useState(mockToDos)
+  // hay que avisarle al State qué puede esperar a recibir en cuando a tipos de valores! porque si no va a inferir que siempre vas a recibir el tipo de valor que usamos al setear el estado inicial
+  const [filterSelected, setFilterSelected] = useState<FilterValue>(TODO_FILTERS.ALL)
 
   // el handleRemove lo hago aquí porque aquí tengo el estado!
   const handleRemove = ({ id }: TodoId): void => {
@@ -44,14 +48,42 @@ const App = (): JSX.Element => {
     setTodos(newTodos)
   }
 
+  const handleFilterChange = (filter: FilterValue): void => {
+    setFilterSelected(filter)
+    console.log('éste es el filtro en que hicimoss click', filter)
+    console.log('éste es el filtro elegido tras el seteo', filterSelected)
+    console.log('éste es el filteredTodos', filteredTodos)
+  }
+
+  const activeCount = todos.filter(todo => !todo.completed).length
+  const completedCount = todos.length - activeCount
+
+  const filteredTodos = todos.filter(todo => {
+    console.log('estoy haciendo lo del filteredTodos, éste es el filterSelected', filterSelected)
+    if (filterSelected === TODO_FILTERS.ACTIVE) {
+      console.log('lo todos activos', !todo.completed)
+      return !todo.completed
+    }
+    if (filterSelected === TODO_FILTERS.COMPLETED) {
+      console.log('los todos completos', todo.completed)
+      return todo.completed
+    } else return todo
+  })
+
   return (
     <div className='todoapp'>
       <h1>Aquí vamos</h1>
       <Todos
-        todos={todos}
-        onRemoveTodo={handleRemove}
         onToggleCompleted={handleCompleted}
+        onRemoveTodo={handleRemove}
+        todos={filteredTodos}
         />
+        <Footer
+        activeCount={activeCount}
+        completedCount={completedCount}
+        filterSelected={filterSelected}
+        onClearCompleted={() => {}}
+        handleFilterChange={handleFilterChange} />
     </div>
   )
 }

@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleCompleted }) => {
+  console.log('los todos recibidos por el componente Todos.jsx', todos)
   return (
         <ul className='todo-list'>
             {
