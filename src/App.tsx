@@ -50,24 +50,15 @@ const App = (): JSX.Element => {
 
   const handleFilterChange = (filter: FilterValue): void => {
     setFilterSelected(filter)
-    console.log('éste es el filtro en que hicimoss click', filter)
-    console.log('éste es el filtro elegido tras el seteo', filterSelected)
-    console.log('éste es el filteredTodos', filteredTodos)
   }
 
   const activeCount = todos.filter(todo => !todo.completed).length
   const completedCount = todos.length - activeCount
 
   const filteredTodos = todos.filter(todo => {
-    console.log('estoy haciendo lo del filteredTodos, éste es el filterSelected', filterSelected)
-    if (filterSelected === TODO_FILTERS.ACTIVE) {
-      console.log('lo todos activos', !todo.completed)
-      return !todo.completed
-    }
-    if (filterSelected === TODO_FILTERS.COMPLETED) {
-      console.log('los todos completos', todo.completed)
-      return todo.completed
-    } else return todo
+    if (filterSelected === TODO_FILTERS.ACTIVE) return !todo.completed
+    if (filterSelected === TODO_FILTERS.COMPLETED) return todo.completed
+    else return todo
   })
 
   return (

@@ -20,3 +20,5 @@ export const FILTERS_BUTTONS = {
     href: `/?filter=${TODO_FILTERS.COMPLETED}`
   }
 } as const
+
+// Con a href se crean enlaces internos o externos en un documento HTML. Utilizado correctamente, el atributo href se integra perfectamente en tu página web y aparece ahí en forma de hipervínculo. Los visitantes pueden hacer clic sobre él para ir a otra página o a otro destino dentro de tu propia web.

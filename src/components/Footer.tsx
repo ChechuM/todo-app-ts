@@ -10,9 +10,7 @@ interface Props {
 }
 
 export const Footer: React.FC<Props> = ({
-//   completedCount = 0,
   activeCount = 0,
-  //   onClearCompleted,
   filterSelected,
   handleFilterChange
 }) => {
@@ -23,7 +21,7 @@ export const Footer: React.FC<Props> = ({
             </span>
             <Filters
                 filterSelected={filterSelected}
-                onFilterChange={() => { handleFilterChange(filterSelected) }} />
+                onFilterChange={handleFilterChange} />
         </footer>
   )
 }

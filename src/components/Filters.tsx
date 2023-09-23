@@ -16,10 +16,12 @@ export const Filters: React.FC<Props> = ({ filterSelected, onFilterChange }) => 
                 // Object.entries() transforma el objeto FILTERS_BUTTONS en un array para poder aplicarle el método map
                 Object.entries(FILTERS_BUTTONS).map(([key, { literal, href }]) => {
                   // para no hacer todo un lío con la clase dinámica en medio del código html vamos a seleccionarla aquí que es más fácil:
+
+                  // para cada elemento de los filtros -> primero defino si ha sido seleccionado -> el valor que devuelve esto es booleano
                   const isSelected = key === filterSelected
-                  console.log('esto es isSelected', isSelected)
+                  // luego en base a eso define el nombre de la clase -> si es true, la clase será selected, si no la clase es un string vaío
                   const className = isSelected ? 'selected' : ''
-                  console.log('y ésto es la className', className)
+
                   return (
                         <li key={key}>
                             <a
@@ -27,6 +29,8 @@ export const Filters: React.FC<Props> = ({ filterSelected, onFilterChange }) => 
                             href={href}
                             onClick={(evt) => {
                               evt.preventDefault()
+                              // cuando hago click en los filtros se envían las palabras all, active o completed -> eso es lo que envía key as FilterValue -> es un string
+                              // lo pongo como key as FilterValue para tiparlo
                               onFilterChange(key as FilterValue)
                             }}
                             >
