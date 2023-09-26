@@ -1,6 +1,7 @@
 These are things I want to do with this web app in order to improve it:
 
+* Deploy it
 * Be able to edit the todo from the list after it was created 
 * Add animations with Autoanimate
-* Use Reducer
 * BackEnd
+* Create a black-mode
