@@ -1,9 +1,12 @@
-import { useReducer, useState } from 'react'
+import { useReducer, useState, useRef, useEffect } from 'react'
 import { Todos } from './components/Todos'
 import { type FilterValue, type TodoId, type Todo as TodoType, type TodoTitle, type ListOfToDos } from './types'
 import { TODO_FILTERS } from './const'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
+import autoAnimate from '@formkit/auto-animate'
+import linkedin from './imgs/in.jpg'
+import github from './imgs/git.png'
 
 const mockToDos = [
   {
@@ -78,6 +81,12 @@ const todoReducer = (state: ListOfToDos, action: reducerAction): ListOfToDos => 
 }
 
 const App = (): JSX.Element => {
+  const parent = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    (parent.current != null) && autoAnimate(parent.current)
+  }, [parent])
+
   const INITIAL_STATE = mockToDos
   // REDUCER DECLARATION
   const [state, dispatch] = useReducer(todoReducer, INITIAL_STATE)
@@ -130,20 +139,26 @@ const App = (): JSX.Element => {
   })
 
   return (
-    <div className='todoapp'>
-      <Header onAdded={handleAdd} />
-      <Todos
-        onToggleCompleted={handleCompleted}
-        onRemoveTodo={handleRemove}
-        todos={filteredTodos}
-        />
-      <Footer
-        activeCount={activeCount}
-        completedCount={completedCount}
-        filterSelected={filterSelected}
-        handleFilterChange={handleFilterChange}
-        onClearCompleted={handleRemoveCompleted}
-        />
+    <div style={{ position: 'relative' }}>
+      <div className='todoapp' ref={parent}>
+        <Header onAdded={handleAdd} />
+        <Todos
+          onToggleCompleted={handleCompleted}
+          onRemoveTodo={handleRemove}
+          todos={filteredTodos}
+          />
+        <Footer
+          activeCount={activeCount}
+          completedCount={completedCount}
+          filterSelected={filterSelected}
+          handleFilterChange={handleFilterChange}
+          onClearCompleted={handleRemoveCompleted}
+          />
+      </div>
+          <footer style={{ position: 'absolute', bottom: '-70px', right: '0px' }}>proyect done to test TypeScript skills by Cecilia Moroni <span>  </span>
+          <a href="https://www.linkedin.com/in/cecilia-moroni/"><img src={linkedin} alt="LinkedIn logo" style={{ width: '20px', height: 'auto' }}/> </a> <span>  </span>
+          <a href="https://github.com/ChechuM"><img src={github} alt="GitHub logo" style={{ width: '20px', height: 'auto' }}/> </a>
+          </footer>
     </div>
   )
 }
