@@ -1,6 +1,6 @@
 import { useReducer, useState, useRef, useEffect } from 'react'
 import { Todos } from './components/Todos'
-import { type FilterValue, type TodoId, type Todo as TodoType, type TodoTitle, type ListOfToDos } from './types'
+import { type FilterValue, type TodoId, type Todo as TodoType, type TodoTitle, type ListOfToDos, type TodoEdited } from './types'
 import { TODO_FILTERS } from './const'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -37,6 +37,12 @@ type reducerAction = {
   payload: string
 } | {
   type: 'removeCompleted'
+} | {
+  type: 'editTodo'
+  payload: {
+    id: string
+    title: string
+  }
 }
 
 // REDUCER FUNCTION
@@ -73,6 +79,21 @@ const todoReducer = (state: ListOfToDos, action: reducerAction): ListOfToDos => 
     case 'removeCompleted' :{
       const pendingTodos = state.filter(todo => !todo.completed)
       return pendingTodos
+    }
+
+    case 'editTodo' :{
+      const editId = action.payload.id
+      const editedTitle = action.payload.title
+      const editedTodo = state.map(todo => {
+        if (todo.id === editId) {
+          return {
+            id: todo.id,
+            title: editedTitle,
+            completed: false
+          }
+        } else return todo
+      })
+      return editedTodo
     }
 
     default:
@@ -124,6 +145,16 @@ const App = (): JSX.Element => {
     })
   }
 
+  const handleEdit = ({ id, title }: TodoEdited): void => {
+    dispatch({
+      type: 'editTodo',
+      payload: {
+        id,
+        title
+      }
+    })
+  }
+
   // FILTERS
   const handleFilterChange = (filter: FilterValue): void => {
     setFilterSelected(filter)
@@ -146,6 +177,7 @@ const App = (): JSX.Element => {
           onToggleCompleted={handleCompleted}
           onRemoveTodo={handleRemove}
           todos={filteredTodos}
+          onEdit={handleEdit}
           />
         <Footer
           activeCount={activeCount}

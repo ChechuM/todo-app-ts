@@ -10,6 +10,7 @@ export interface Todo {
 export type TodoId = Pick<Todo, 'id'>
 export type TodoTitle = Pick<Todo, 'title'>
 export type TodoCompleted = Pick<Todo, 'completed'>
+export type TodoEdited = Omit<Todo, 'completed'>
 // el contrario de Pick es el Omit
 
 export type ListOfToDos = Todo[]
