@@ -1,5 +1,6 @@
 import { type TodoTitle } from '../types'
 import { CreateTodo } from './CreateTodo'
+import tsLogo from '../imgs/tslogo.png'
 
 interface Props {
   onAdded: (title: TodoTitle) => void
@@ -10,7 +11,7 @@ export const Header: React.FC<Props> = ({ onAdded }) => {
     <header className="header">
         <h1>todo<img
         style={{ width: '60px', height: 'auto' }}
-        src='https://cdn.icon-icons.com/icons2/2415/PNG/512/typescript_original_logo_icon_146317.png'
+        src={tsLogo}
         alt='TypeScript Logo'/>
         </h1>
         <CreateTodo saveTodo={onAdded} />

@@ -11,7 +11,7 @@ import github from './imgs/git.png'
 const mockToDos = [
   {
     id: '1',
-    title: 'Finish the Full Stack Developer Course',
+    title: 'Finish Full Stack Developer Course',
     completed: true
   },
   {
